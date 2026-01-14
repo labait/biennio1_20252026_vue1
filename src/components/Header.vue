@@ -2,15 +2,26 @@
 import { ref, onMounted } from 'vue';
 import NavLinks from './NavLinks.vue';
 
+let hamburger;
+let offCanvasMenu;
+
 onMounted(() => {
-  const hamburger = document.querySelector('.hamburger');
-  const offCanvasMenu = document.getElementById('menu-off-canvas');
+  hamburger = document.querySelector('.hamburger');
+  offCanvasMenu = document.getElementById('menu-off-canvas');
 
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('is-active');
     offCanvasMenu.classList.toggle('is-active');
   });
 });
+
+const handeLinkClick = (link) => {
+  console.log('Link clicked:', link);
+  if(offCanvasMenu.classList.contains('is-active')) {
+    hamburger.classList.remove('is-active');
+    offCanvasMenu.classList.remove('is-active');
+  }
+};
 
 </script>
 
@@ -32,7 +43,10 @@ onMounted(() => {
     
     <div id="menu-off-canvas" class=" bg-cyan-500  flex items-center justify-center w-screen h-screen absolute top-0">
       <nav class="gap-4 flex flex-col items-center justify-center mb-8">
-        <NavLinks />
+        <NavLinks 
+          css_class="text-4xl font-bold cursor-pointer hover:underline"
+          @click="(link) => handeLinkClick(link)"
+        />
       </nav>
     </div>
   </div>
